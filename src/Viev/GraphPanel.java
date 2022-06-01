@@ -1,13 +1,16 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
 
 package Viev;
 
 import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
+import java.io.Serial;
+import java.util.ArrayList;
+
+import static java.lang.Math.abs;
 
 public class GraphPanel extends JPanel {
-    public GraphPanel() {
-    }
+
+    private int candles=20;
+
 }

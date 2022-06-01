@@ -5,15 +5,18 @@
 
 package Viev;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.event.ActionListener;
+import javax.sound.sampled.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class View {
     private JFrame mainframe = new JFrame("GRA");
@@ -28,10 +31,16 @@ public class View {
     private JLabel actualbalance = new JLabel("aktualny stan konta:");
     private JLabel actualstockamount = new JLabel("ilość posiadanych akcji:");
     private JLabel actualstockworth = new JLabel("wartość twoich akcji:");
-    private JButton buy = new JButton("Kup Akcje");
-    private JButton sell = new JButton("Sprzedaj Akcje");
+    private JButton buy = new JButton("Kup 1 Akcję");
+    private JButton sell = new JButton("Sprzedaj 1 Akcję");
     private JButton stop = new JButton("Pauza");
+    private JButton buy5 = new JButton("Kup 5 akcji");
+    private JButton sell5 = new JButton("Sprzedaj 5 akcji");
+    private JButton music = new JButton("start muzyki");
+    private JButton music1 = new JButton("stop muzyki");
+
     private static final Dimension dimension = new Dimension(1200, 600);
+    private static final Dimension dimension1 = new Dimension(1200,100);
 
     private void inicial() {
         this.inorth();
@@ -39,11 +48,13 @@ public class View {
         this.icentre();
         this.isouth();
         this.iwest();
-        this.mainpanel.add(this.north, "North");
-        this.mainpanel.add(this.west, "West");
-        this.mainpanel.add(this.south, "South");
-        this.mainpanel.add(this.east, "East");
-        this.mainpanel.add(this.center, "Center");
+        this.south.setSize(dimension1);
+        this.mainpanel.setLayout(new BorderLayout());
+        this.mainpanel.add(this.north, BorderLayout.NORTH);
+        this.mainpanel.add(this.west, BorderLayout.WEST);
+        this.mainpanel.add(this.south, BorderLayout.SOUTH);
+        this.mainpanel.add(this.east, BorderLayout.EAST);
+        this.mainpanel.add(this.center, BorderLayout.CENTER);
         this.mainframe.add(this.mainpanel);
         this.mainframe.setVisible(true);
         this.mainframe.setSize(dimension);
@@ -55,34 +66,27 @@ public class View {
 
     private void inorth() {
         this.north.setLayout(new GridLayout(1, 2));
-        this.north.setBackground((Color)null);
-        this.north.setOpaque(false);
-        this.stop.setVerticalAlignment(1);
-
-        BufferedImage image1;
-        try {
-            image1 = ImageIO.read(new File("src/Mao.jpg"));
-        } catch (IOException var4) {
-            throw new RuntimeException(var4);
-        }
-
-        JLabel im = new JLabel(new ImageIcon(image1));
-        im.setVerticalAlignment(1);
-        Dimension dimension = new Dimension(50, 50);
-        this.stop.setMaximumSize(dimension);
-        this.north.add(this.stop);
+        this.north.setBackground(Color.RED);
+        this.north.setOpaque(true);
     }
 
     private void isouth() {
+        JLabel text = new JLabel("");
+        JLabel text1 = new JLabel("");
+        JLabel text2 = new JLabel("");
         this.south.setLayout(new GridLayout(1, 5, 10, 10));
-        this.south.setBackground((Color)null);
-        this.south.setOpaque(false);
+        this.south.setBackground(Color.WHITE);
+        this.south.setOpaque(true);
+        this.south.add(this.buy);
+        this.south.add(this.buy5);
+        this.south.add(text1);
         this.south.add(this.sell);
+        this.south.add(this.sell5);
     }
 
     private void iwest() {
         this.west.setLayout(new GridLayout(10, 1, 10, 10));
-        JLabel text = new JLabel("Orlen");
+        JLabel text = new JLabel("ChRLD");
         text.setVerticalAlignment(1);
         text.setHorizontalAlignment(0);
         this.west.setBackground((Color)null);
@@ -105,25 +109,39 @@ public class View {
         this.stockprice.setVerticalAlignment(1);
         this.stockprice.setHorizontalAlignment(2);
         this.west.add(this.stockprice);
-        this.west.add(this.buy);
+
     }
 
     private void ieast() {
-        this.east.setLayout(new GridLayout(10, 1, 10, 10));
+        this.east.setLayout(new GridLayout(5, 1, 10, 10));
         this.east.setBackground((Color)null);
         this.east.setOpaque(false);
-        this.actualbalance.setVerticalAlignment(1);
-        this.actualbalance.setHorizontalAlignment(4);
+        this.actualbalance.setVerticalAlignment(JLabel.CENTER);
+        this.actualbalance.setHorizontalAlignment(JLabel.CENTER);
         this.east.add(this.actualbalance);
-        this.actualstockamount.setVerticalAlignment(1);
-        this.actualstockworth.setHorizontalAlignment(4);
+        this.actualstockamount.setVerticalAlignment(JLabel.CENTER);
+        this.actualstockworth.setHorizontalAlignment(JLabel.CENTER);
         this.east.add(this.actualstockamount);
-        this.actualstockworth.setVerticalAlignment(1);
-        this.actualstockamount.setHorizontalAlignment(4);
+        this.actualstockworth.setVerticalAlignment(JLabel.CENTER);
+        this.actualstockamount.setHorizontalAlignment(JLabel.CENTER);
         this.east.add(this.actualstockworth);
     }
 
     private void icentre() {
+        this.center.setLayout(new GridLayout(1,1));
+        this.center.setBackground(null);
+        this.center.setOpaque(false);
+        BufferedImage image2;
+        try {
+            image2 = ImageIO.read(new File("src/biały prostokąt.png"));
+        } catch (IOException var4) {
+            throw new RuntimeException(var4);
+        }
+
+        JLabel im = new JLabel(new ImageIcon(image2));
+        im.setVerticalAlignment(JLabel.CENTER);
+        im.setHorizontalAlignment(JLabel.CENTER);
+        center.add(im);
     }
 
     public void setStockprice(String stockprice) {
@@ -149,7 +167,14 @@ public class View {
     public void adactionbuy(ActionListener action) {
         this.buy.addActionListener(action);
     }
+    public void adactionbuy5(ActionListener action) {
+        this.buy5.addActionListener(action);
+    }
     public void adactionsell(ActionListener action){this.sell.addActionListener(action);}
+    public void adactionsell5(ActionListener action){this.sell5.addActionListener(action);}
+    public void startmusic(ActionListener action){this.music.addActionListener(action);}
+
+
 
     public void notenoughstocks() {
         JOptionPane.showMessageDialog(this.mainframe, "Nie możesz sprzedać tego co nie twoje", "Wiadomość od Wielkiego Potężnego Mao", 2);
