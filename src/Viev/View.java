@@ -26,7 +26,7 @@ public class View {
     private JPanel east = new JPanel();
     private JPanel west = new JPanel();
     private JPanel center = new JPanel();
-    private GraphPanel graphPanel = new GraphPanel();
+    //private GraphPanel graphPanel = new GraphPanel();
     private JLabel stockprice = new JLabel("aktualna cena:");
     private JLabel actualbalance = new JLabel("aktualny stan konta:");
     private JLabel actualstockamount = new JLabel("ilość posiadanych akcji:");
