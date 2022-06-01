@@ -4,10 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 @SuppressWarnings("FieldCanBeLocal")
-public class CandleStick implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 3541615373408865763L;
-
+public class CandleStick {
     //in 0-1, relative to context
     private double openPricePercentHeight;
     private double closePricePercentHeight;
@@ -20,8 +17,6 @@ public class CandleStick implements Serializable {
     private double maxPrice;
     private double minPrice;
 
-    private final CryptoCurrency cryptoCurrency;
-    private final GameTime openTime;
 
     //Mapping parameters
     private final double LOWER_BOUND = 0d;
@@ -32,9 +27,7 @@ public class CandleStick implements Serializable {
     public CandleStick(double openPriceUSDT,
                        double closePriceUSDT,
                        double maxPriceUSDT,
-                       double minPriceUSDT,
-                       CryptoCurrency cryptoCurrency,
-                       GameTime openTime) {
+                       double minPriceUSDT) {
         this.openPrice = openPriceUSDT;
         this.closePrice = closePriceUSDT;
         this.maxPrice = maxPriceUSDT;
@@ -43,14 +36,6 @@ public class CandleStick implements Serializable {
         this.openTime = openTime.clone();
     }
 
-    public CandleStick(CryptoCurrency cryptoCurrency, GameTime openTime) {
-        this(cryptoCurrency.getCurrentPrice(),
-                cryptoCurrency.getCurrentPrice(),
-                cryptoCurrency.getCurrentPrice(),
-                cryptoCurrency.getCurrentPrice(),
-                cryptoCurrency,
-                openTime);
-    }
 
     public void mapPriceValues(double minPriceInArray, double maxPriceInArray) {
         if (minPriceInArray == maxPriceInArray) {
@@ -80,9 +65,7 @@ public class CandleStick implements Serializable {
         return ((valueToMap - min) / (max - min)) * (upperBound - lowerBound) + lowerBound;
     }
 
-    public void updatePrices() {
-        double newPrice = cryptoCurrency.getCurrentPrice();
-
+    public void updatePrices(Double newPrice) {
         this.closePrice = newPrice;
         this.maxPrice = Math.max(newPrice, this.maxPrice);
         this.minPrice = Math.min(newPrice, this.minPrice);
@@ -107,15 +90,8 @@ public class CandleStick implements Serializable {
         return minPricePercentHeight;
     }
 
-    public PriceDirection getColor() {
-        if (closePricePercentHeight - openPricePercentHeight > 0) {
-            return PriceDirection.UP;
-        }
-        return PriceDirection.DOWN;
-    }
-
-    public GameTime getOpenTime() {
-        return openTime;
+    public boolean getColor() {
+        return closePricePercentHeight - openPricePercentHeight > 0;
     }
 
     public double getMaxPrice() {

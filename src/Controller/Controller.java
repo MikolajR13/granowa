@@ -33,6 +33,7 @@ public class Controller {
         view.setActualbalance(String.valueOf(model.getActualbalance()));
         view.setActualstockamount(String.valueOf(model.getActualstockamount()));
         model.addpricetolist();
+        view.updateGraph(model.getCandleSticks());
     }
 
     public Controller() {

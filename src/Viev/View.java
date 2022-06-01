@@ -5,6 +5,8 @@
 
 package Viev;
 
+import Model.CandleStick;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -26,7 +28,7 @@ public class View {
     private JPanel east = new JPanel();
     private JPanel west = new JPanel();
     private JPanel center = new JPanel();
-    //private GraphPanel graphPanel = new GraphPanel();
+    private GraphPanel graphPanel = new GraphPanel();
     private JLabel stockprice = new JLabel("aktualna cena:");
     private JLabel actualbalance = new JLabel("aktualny stan konta:");
     private JLabel actualstockamount = new JLabel("ilość posiadanych akcji:");
@@ -128,20 +130,10 @@ public class View {
     }
 
     private void icentre() {
-        this.center.setLayout(new GridLayout(1,1));
+        this.center.setLayout(new GridLayout(1, 1));
         this.center.setBackground(null);
         this.center.setOpaque(false);
-        BufferedImage image2;
-        try {
-            image2 = ImageIO.read(new File("src/biały prostokąt.png"));
-        } catch (IOException var4) {
-            throw new RuntimeException(var4);
-        }
-
-        JLabel im = new JLabel(new ImageIcon(image2));
-        im.setVerticalAlignment(JLabel.CENTER);
-        im.setHorizontalAlignment(JLabel.CENTER);
-        center.add(im);
+        center.add(graphPanel);
     }
 
     public void setStockprice(String stockprice) {
@@ -178,5 +170,9 @@ public class View {
 
     public void notenoughstocks() {
         JOptionPane.showMessageDialog(this.mainframe, "Nie możesz sprzedać tego co nie twoje", "Wiadomość od Wielkiego Potężnego Mao", 2);
+    }
+
+    public void updateGraph(ArrayList<CandleStick> candleStickArrayList){
+        graphPanel.update(candleStickArrayList);
     }
 }
