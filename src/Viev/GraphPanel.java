@@ -66,10 +66,9 @@ public class GraphPanel extends JPanel {
         int candleStickWidth = this.getWidth() / candleStickArrayList.size();
 //        int middleOfLastCandleStick = candleStickArrayList.size() * candleStickWidth - candleStickWidth / 2;
 
-        for (int i = 0; i < arrayListToDraw.size(); i++) {
-            paintCandleStick(i * candleStickWidth, arrayListToDraw.get(i), g2D, candleStickWidth);
+        for (int i = 0; i < candleStickArrayList.size(); i++) {
+            paintCandleStick(i * candleStickWidth, candleStickArrayList.get(i), g2D, candleStickWidth);
         }
-        paintCurrentPriceLine(g2D, lastCandleStick, middleOfLastCandleStick);
     }
     @Override
     public void paint(Graphics g) {

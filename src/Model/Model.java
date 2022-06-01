@@ -71,8 +71,7 @@ public class Model {
     }
 
     public double getStockprice() {
-       return this.stockprice;
-
+        return this.stockprice;
     }
 
     public void addpricetolist() {

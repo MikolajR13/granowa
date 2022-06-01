@@ -32,8 +32,6 @@ public class CandleStick {
         this.closePrice = closePriceUSDT;
         this.maxPrice = maxPriceUSDT;
         this.minPrice = minPriceUSDT;
-        this.cryptoCurrency = cryptoCurrency;
-        this.openTime = openTime.clone();
     }
 
 
