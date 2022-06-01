@@ -10,7 +10,8 @@ import static java.lang.Math.abs;
 
 public class GraphPanel extends JPanel {
 
-    private ArrayList<CandleStick> candleStickArrayList;
+    private ArrayList<CandleStick> candleStickArrayListToDraw;
+    private int amountToDraw;
 
     //====================================================Public Methods==============================================//
 
@@ -19,13 +20,21 @@ public class GraphPanel extends JPanel {
         this.setBackground(Color.BLACK);
     }
 
-    public void update(ArrayList<CandleStick> candleStickArrayList) {
-        this.candleStickArrayList = candleStickArrayList;
-        if(candleStickArrayList == null || candleStickArrayList.size() == 0){
+    public void update(ArrayList<CandleStick> candleStickArrayList, int amountToDraw) {
+        this.candleStickArrayListToDraw = new ArrayList<>();
+        this.amountToDraw = amountToDraw;
+        if(candleStickArrayList.size() > amountToDraw){
+            for(int i = candleStickArrayList.size()-amountToDraw; i<=candleStickArrayList.size()-1; i++){
+                this.candleStickArrayListToDraw.add(candleStickArrayList.get(i));
+            }
+        }else{
+            this.candleStickArrayListToDraw = candleStickArrayList;
+        }
+        if(candleStickArrayList.size() == 0){
             System.out.println("Candlestick arraylist is empty or null");
             return;
         }
-        System.out.println(candleStickArrayList.size());
+        System.out.println(candleStickArrayListToDraw.size());
 
         this.setIgnoreRepaint(false);
         this.repaint();
@@ -57,17 +66,17 @@ public class GraphPanel extends JPanel {
     }
 
     private void paintAllCandleSticks(Graphics2D g2D) {
-        if(candleStickArrayList == null || candleStickArrayList.size() == 0){
+        if(candleStickArrayListToDraw == null || candleStickArrayListToDraw.size() == 0){
             System.out.println("Candlestick arraylist is empty or null");
             return;
         }
 
 //        CandleStick lastCandleStick = candleStickArrayList.get(candleStickArrayList.size() - 1);
-        int candleStickWidth = this.getWidth() / candleStickArrayList.size();
+        int candleStickWidth = this.getWidth() / amountToDraw;
 //        int middleOfLastCandleStick = candleStickArrayList.size() * candleStickWidth - candleStickWidth / 2;
 
-        for (int i = 0; i < candleStickArrayList.size(); i++) {
-            paintCandleStick(i * candleStickWidth, candleStickArrayList.get(i), g2D, candleStickWidth);
+        for (int i = 0; i < candleStickArrayListToDraw.size(); i++) {
+            paintCandleStick(i * candleStickWidth, candleStickArrayListToDraw.get(i), g2D, candleStickWidth);
         }
     }
     @Override

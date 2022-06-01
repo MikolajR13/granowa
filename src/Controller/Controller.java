@@ -28,19 +28,19 @@ public class Controller {
         model.updatePrice();
         model.updateBalance();
         model.updateAmount();
-        view.setActualstockworth(String.valueOf(model.getActualstockworth()));
+        view.setActualstockworth(String.format("%,.2f",model.getActualstockworth()));
         view.setStockprice(String.valueOf((model.getStockprice())));
         view.setActualbalance(String.valueOf(model.getActualbalance()));
         view.setActualstockamount(String.valueOf(model.getActualstockamount()));
         model.addpricetolist();
-        view.updateGraph(model.getCandleSticks());
+        view.updateGraph(model.getCandleSticks(), 20);
     }
 
     public Controller() {
 
         this.view.adactionbuy(new buyaction(1));
         this.view.adactionsell(new sellaction(1));
-        timer = new Timer(1000,e->{this.nextframe();});
+        timer = new Timer(50,e->{this.nextframe();});
         timer.start();
         this.view.adactionbuy5(new buyaction(5));
         this.view.adactionsell5(new sellaction(5));

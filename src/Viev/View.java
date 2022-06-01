@@ -172,7 +172,7 @@ public class View {
         JOptionPane.showMessageDialog(this.mainframe, "Nie możesz sprzedać tego co nie twoje", "Wiadomość od Wielkiego Potężnego Mao", 2);
     }
 
-    public void updateGraph(ArrayList<CandleStick> candleStickArrayList){
-        graphPanel.update(candleStickArrayList);
+    public void updateGraph(ArrayList<CandleStick> candleStickArrayList, int amountToDraw){
+        graphPanel.update(candleStickArrayList,amountToDraw);
     }
 }
