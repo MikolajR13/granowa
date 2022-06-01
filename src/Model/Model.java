@@ -75,13 +75,41 @@ public class Model {
     }
 
     public void addpricetolist() {
-        if (framesUntilNewCandlestick % 5 == 0){
-            candleSticks.add(new CandleStick(stockprice,stockprice,stockprice,stockprice));
+        if (framesUntilNewCandlestick % 5 == 0) {
+            if (candleSticks.size() == 0) {
+                candleSticks.add(new CandleStick(stockprice,
+                        stockprice,
+                        stockprice,
+                        stockprice));
+            } else {
+                CandleStick previousCandleStick = candleSticks.get(candleSticks.size() - 1);
+                double previousClosePrice = previousCandleStick.getClosePrice();
+                candleSticks.add(new CandleStick(previousClosePrice,
+                        previousClosePrice,
+                        previousClosePrice,
+                        previousClosePrice));
+            }
         }
         framesUntilNewCandlestick++;
-            CandleStick lastCandleStick = candleSticks.get(candleSticks.size()-1);
+        CandleStick lastCandleStick = candleSticks.get(candleSticks.size() - 1);
         lastCandleStick.updatePrices(stockprice);
+
+        double minPriceInArrayList = Double.MAX_VALUE;
+        double maxPriceInArrayList = Double.MIN_VALUE;
+        for (CandleStick cs : candleSticks) {
+            if (cs.getMinPrice() < minPriceInArrayList) {
+                minPriceInArrayList = cs.getMinPrice();
+            }
+            if (cs.getMaxPrice() > maxPriceInArrayList) {
+                maxPriceInArrayList = cs.getMaxPrice();
+            }
+        }
+        for (CandleStick cs : candleSticks) {
+            cs.mapPriceValues(minPriceInArrayList, maxPriceInArrayList);
+        }
+
     }
+
 
     public ArrayList<CandleStick> getCandleSticks() {
         return candleSticks;

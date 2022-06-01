@@ -103,4 +103,8 @@ public class CandleStick {
     public double getAveragePrice() {
         return Math.abs(closePrice-openPrice)/2.0 + Math.min(closePrice,openPrice);
     }
+
+    public double getClosePrice() {
+        return closePrice;
+    }
 }
